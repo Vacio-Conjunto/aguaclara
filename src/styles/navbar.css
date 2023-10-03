@@ -1,0 +1,15 @@
+/* Navbar container */
+.navbar {
+position: fixed;
+top: 0;
+left: 0px; /* Adjust this value to match the width of your sidebar */
+right: 0;
+color: #000000a9;
+padding-top: 30px; 
+z-index: 0; /* Lower z-index to make it appear below the sidebar */
+}
+
+span {
+    font-size: larger;
+}
+
