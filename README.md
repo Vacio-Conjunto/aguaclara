@@ -15,33 +15,33 @@ npm run dev
 4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador
 
 ## Estructura de carpetas
-AGUACLARA/
-  ├── README.md - This file
-  ├── node_modules/
-  ├── package.json
-  ├── prisma 
-  │   └── schema.prisma - Prisma ORM config and schemas
-  ├── public/
-  │   ├── index.html
-  │   └── favicon.ico
-  ├── src/
-  │   ├── About/ - About page
-  │   ├── api - Api routes
-  │   │   ├── submitReporteAgua/ - Submit report endpoint
-  │   │   └── ...
-  │   ├── components/ - App components
-  │   │   ├── FormularioReporte.js - Form componenet
-  │   │   ├── Navbar.js - Navbar componenet
-  │   │   └── ...
-  │   ├── home/ - Conjunto vacio home page
-  │   │   ├── Home.js
-  │   │   ├── About.js
-  │   │   ├── Contact.js
-  │   │   └── ...
-  │   ├── reporte/ - Reporte and map page
-  │   │   ├── Page.js
-  │   │   └── ...
-  │   ├── page.js / - Root page
-  │   ├── layout.js
-  │   └── ...
-  └── ...
+- AGUACLARA/
+  - README.md - Este archivo
+  - node_modules/
+  - package.json
+  - prisma/
+    - schema.prisma - Configuración y esquemas de Prisma ORM
+  - public/
+    - index.html
+    - favicon.ico
+  - src/
+    - About/ - Página "Acerca de"
+    - api/ - Rutas de la API
+      - submitReporteAgua/ - Punto de envío de informes
+      - ...
+    - components/ - Componentes de la aplicación
+      - FormularioReporte.js - Componente de formulario
+      - Navbar.js - Componente de barra de navegación
+      - ...
+    - home/ - Página principal vacía
+      - Home.js
+      - About.js
+      - Contact.js
+      - ...
+    - reporte/ - Página de informe y mapa
+      - Page.js
+      - ...
+    - page.js - Página raíz
+    - layout.js
+    - ...
+- ...
