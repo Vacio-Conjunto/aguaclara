@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import 'primereact/resources/themes/saga-blue/theme.css'; // Puedes elegir un tema diferente si lo prefieres
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import { MultiSelect } from 'primereact/multiselect';
 
 function ReportForm(props) {
 
     const dias = [
-        { name: 'Lunes' },
-        { name: 'Martes' },
-        { name: 'Miercoles' },
-        { name: 'Jueves' },
-        { name: 'Viernes' },
-        { name: 'Sabado' },
+        {name: 'Lunes'},
+        {name: 'Martes'},
+        {name: 'Miercoles'},
+        {name: 'Jueves'},
+        {name: 'Viernes'},
+        {name: 'Sabado'},
         { name: 'Domingo' }
     ];
 
@@ -21,7 +24,7 @@ function ReportForm(props) {
                         Codigo Postal:
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="codigoPostal"
                         value={props.codigoPostal}
                         onChange={(e) => props.setCodigoPostal(e.target.value)}
@@ -34,7 +37,7 @@ function ReportForm(props) {
                         Numero de dias sin servicio:
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="numeroDiasSinServicio"
                         value={props.numeroDiasSinServicio}
                         onChange={(e) => props.setNumeroDiasSinServicio(e.target.value)}
@@ -47,14 +50,17 @@ function ReportForm(props) {
                         Dias de corte (dias en que la cortan comunmente):
                     </label>
                     <div className="card flex justify-content-center">
-                        <MultiSelect
-                            value={props.diasDeCorte}
-                            onChange={(e) => props.setDiasDeCorte(e.value)}
-                            options={dias}
-                            optionLabel="name"
-                            maxSelectedLabels={7}
-                            className="w-full md:w-20rem" />
+                      <MultiSelect
+                        value={props.diasDeCorte}
+                        onChange={(e) => props.setDiasDeCorte(e.value)}
+                        options={dias}
+                        optionLabel="name"
+                        maxSelectedLabels={7}
+                        className="w-full md:w-20rem"
+                        placeholder="Selecciona días" // Puedes personalizar el texto de marcador de posición
+                      />
                     </div>
+
 
                 </div>
                 <div>

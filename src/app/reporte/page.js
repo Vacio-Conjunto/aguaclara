@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, {useState} from "react";
 import Navbar from "@/app/components/Navbar";
 import FormularioReporte from "@/app/components/FormularioReporte";
 
@@ -24,9 +23,9 @@ function Page() {
         //console.log("aux dias de corte ", auxDiasDeCorte)
 
         const data = JSON.stringify({
-            "numeroDiasSinServicio": numeroDiasSinServicio,
+            "numeroDiasSinServicio": parseInt(numeroDiasSinServicio, 10),// Convert to an integer
             "diasDeCorte": diasDeCorte,
-            "codigoPostal": codigoPostal
+            "codigoPostal": parseInt(codigoPostal, 10) // Convert to an integer
         });
 
         const config = {
@@ -68,6 +67,7 @@ function Page() {
                         </div>
 
                         <div className="bg-gray-300 col-span-4 row-span-2 p-2 rounded-lg">
+                            <comment> Mapa de reportes</comment>
                         </div>
                     </div>
                 </div>
