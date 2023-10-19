@@ -14,3 +14,10 @@ model reportes {
   codigoPostal      Int?
   timestamp         DateTime? @default(now()) @db.Timestamp(0)
 }
+
+model mty_zip {
+  codigoPostal Int @id @unique
+  municipio     String?
+  latitud Float
+  longitud Float
+}
