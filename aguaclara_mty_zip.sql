@@ -1,13 +1,13 @@
 DROP TABLE IF EXISTS `mty_zip`;
 CREATE TABLE IF NOT EXISTS `mty_zip` (
-  `codigo_postal` int(5) NOT NULL,
+  `codigoPostal` int(5) NOT NULL,
   `municipio` varchar(60) NOT NULL,
   `latitud` decimal(16,13) DEFAULT NULL,
   `longitud` decimal(16,13) DEFAULT NULL
 );
 
 
-insert into mty_zip (codigo_postal, municipio, latitud, longitud)
+insert into mty_zip (codigoPostal, municipio, latitud, longitud)
 values  (64000, 'Monterrey', 25.6654300689697, -100.3101654052734),
         (64004, 'Monterrey', 25.6772022247314, -100.3322525024414),
         (64007, 'Monterrey', 25.6654396057129, -100.3101654052734),
