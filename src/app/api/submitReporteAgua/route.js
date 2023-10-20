@@ -7,9 +7,14 @@ export async function POST(request) {
     console.log("entre al controller!")
     try {
         const {numeroDiasSinServicio, diasDeCorte, codigoPostal} = await request.json();
-        const diasCorte = diasDeCorte.map(dayObj => dayObj.name);
-        const result = { diasCorte };
 
+        let diasCorte = [];
+
+        if (Array.isArray(diasDeCorte)) {
+            diasCorte = diasDeCorte.map(dayObj => dayObj.name);
+        }
+
+        const result = { diasCorte };
 
         const newEvaluation = await prisma.reportes.create({
             data: {
