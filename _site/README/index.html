@@ -1,0 +1,72 @@
+<h1>Proyecto Agua Clara - by Conjunto Vacío</h1>
+<h2>Instrucciones para correr el proyecto</h2>
+<p>Para inicializar el proyecto de desarrollo local sigue los siguientes pasos:</p>
+<ol>
+<li>Dirigete a la carpeta del proyecto</li>
+<li>Ejecuta los siguientes comandos en la terminal</li>
+</ol>
+<pre><code class="language-bash">npm i --force
+npx prisma generate
+npm run dev
+</code></pre>
+<ol start="3">
+<li>Inizialza un servicio de mysql local y actualiza las credenciales del mismo en el archivo prisma.schema</li>
+<li>Abre <a href="http://localhost:3000">http://localhost:3000</a> en tu navegador</li>
+</ol>
+<h2>Estructura de carpetas</h2>
+<ul>
+<li>AGUACLARA/
+<ul>
+<li>README.md - Este archivo</li>
+<li>node_modules/</li>
+<li>package.json</li>
+<li>prisma/
+<ul>
+<li>schema.prisma - Configuración y esquemas de Prisma ORM</li>
+</ul>
+</li>
+<li>public/
+<ul>
+<li>index.html</li>
+<li>favicon.ico</li>
+</ul>
+</li>
+<li>src/
+<ul>
+<li>About/ - Página &quot;Acerca de&quot;</li>
+<li>api/ - Rutas de la API
+<ul>
+<li>submitReporteAgua/ - Punto de envío de informes</li>
+<li>...</li>
+</ul>
+</li>
+<li>components/ - Componentes de la aplicación
+<ul>
+<li>FormularioReporte.js - Componente de formulario</li>
+<li>Navbar.js - Componente de barra de navegación</li>
+<li>...</li>
+</ul>
+</li>
+<li>home/ - Página principal vacía
+<ul>
+<li>Home.js</li>
+<li>About.js</li>
+<li>Contact.js</li>
+<li>...</li>
+</ul>
+</li>
+<li>reporte/ - Página de informe y mapa
+<ul>
+<li>Page.js</li>
+<li>...</li>
+</ul>
+</li>
+<li>page.js - Página raíz</li>
+<li>layout.js</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>...</li>
+</ul>
