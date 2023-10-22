@@ -5,7 +5,7 @@ import "tailwindcss/tailwind.css";
 
 function Navbar() {
     return (
-        <div className="navbar">
+        <div className="navbar bg-white relative z-10">
             <div className="flex items-center justify-center">
                 <div className="profile flex items-center">
                     <span className="mx-4 font-bold">Conjunto Vacio</span>

@@ -2,9 +2,11 @@
 import React, {useState} from "react";
 import Navbar from "@/app/components/Navbar";
 import FormularioReporte from "@/app/components/FormularioReporte";
-
-// import "@/styles/pages/docentes_page.css";
 import "tailwindcss/tailwind.css";
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import MapComponent from '../components/MapComponent';
+import 'leaflet/dist/leaflet.css';
 
 function Page() {
     const [numeroDiasSinServicio, setNumeroDiasSinServicio] = useState(0);
@@ -16,45 +18,59 @@ function Page() {
     console.log("codigo postal => ", codigoPostal)
 
     const handleSubmite = (e) => {
-
+        //TODO: Agregar la dirección del servidor (localhost o IP) en el archivo .env
+        const serverDirectory = env("SERVER_DIRECTORY");
         e.preventDefault();
-        console.log("hola")
         //var auxDiasDeCorte = diasDeCorte.map(item => item.name);
         //console.log("aux dias de corte ", auxDiasDeCorte)
 
-        const data = JSON.stringify({
-            "numeroDiasSinServicio": parseInt(numeroDiasSinServicio, 10),// Convert to an integer
-            "diasDeCorte": diasDeCorte,
-            "codigoPostal": parseInt(codigoPostal, 10) // Convert to an integer
-        });
+        const endpointUrl = 'http://'+serverDirectory+':3000/api/getUbicacion?codigoPostal=' + codigoPostal;
 
-        const config = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: data
-        };
+        axios.get(endpointUrl)
+            .then(response => {
+                const data = {
+                    numeroDiasSinServicio: parseInt(numeroDiasSinServicio, 10), // Convert to an integer
+                    diasDeCorte: diasDeCorte,
+                    codigoPostal: parseInt(codigoPostal, 10) // Convert to an integer
+                };
 
-        fetch('http://localhost:3000/api/submitReporteAgua', config)
-            .then(res => res.json())
-            .catch(error => console.log("Error cretating evaluation ", error))
+                axios.post('http://'+serverDirectory+'3000/api/submitReporteAgua', data, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Se ha enviado el reporte con éxito',
+                            showConfirmButton: false,
+                            timer: 2000 // Cierra automáticamente después de 2 segundos
+                        });
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Un error ha ocurrido.',
+                            text: error.message
+                        });
+                    });
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'No existe el código postal en Nuevo León',
+                    text: 'Por favor verifica el código postal ingresado'
+                });
+            });
     }
 
     return (
-        <div className="flex h-screen container">
-            <div className="flex-grow flex">
-                <Navbar />
+        <div className="flex flex-col h-screen">
+            <Navbar />
+            <div className="flex-grow flex" style={{ overflowY: 'auto' }}>
                 <div className="flex-grow">
-                    <div className="grid grid-flow-col grid-rows-1 gap-5 p-4 pt-24 h-[100%]">
-                        <div className="pt-24">
-                            <span className="text-3xl pl-52">
-                                Reporta tus fallas en el servicio de agua
-                            </span>
-                            <br />
-                            <span className="pl-52">
-                                y colabora para visibilizar el tamaño real de esta problematica.
-                            </span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-4 pt-12">
+                        <div className="md:pt-2">
                             <FormularioReporte
                                 numeroDiasSinServicio={numeroDiasSinServicio}
                                 setNumeroDiasSinServicio={setNumeroDiasSinServicio}
@@ -65,9 +81,10 @@ function Page() {
                                 handleSubmite={handleSubmite}
                             />
                         </div>
-
-                        <div className="bg-gray-300 col-span-4 row-span-2 p-2 rounded-lg">
-                            <comment> Mapa de reportes</comment>
+                        <div className="bg-gray-300 rounded-lg" style={{ minHeight: '600px', marginTop: '1rem', marginBottom: '2rem' }}>
+                            <div style={{ height: '100%', width: '100%' }}>
+                                <MapComponent key="mapita" />
+                            </div>
                         </div>
                     </div>
                 </div>

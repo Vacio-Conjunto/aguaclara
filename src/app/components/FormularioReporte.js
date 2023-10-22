@@ -2,7 +2,7 @@ import React from "react";
 import 'primereact/resources/themes/saga-blue/theme.css'; // Puedes elegir un tema diferente si lo prefieres
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import { MultiSelect } from 'primereact/multiselect';
+import {MultiSelect} from 'primereact/multiselect';
 
 function ReportForm(props) {
 
@@ -17,7 +17,11 @@ function ReportForm(props) {
     ];
 
     return (
-        <div className="pt-8">
+        <div className="pt-8 mx-auto max-w-md">
+            <div style={{textAlign: 'left', marginBottom: '2rem'}}>
+                <p className="text-3xl">Reporta tus fallas en el servicio de agua</p>
+                <p className="mt-2">y colabora para visibilizar el tamaño real de esta problemática.</p>
+            </div>
             <form onSubmit={props.handleSubmite} className="max-w-md max-h-96 mx-auto p-4 border rounded-lg shadow-md">
                 <div className="mb-4">
                     <label htmlFor="codigoPostal" className="block font-bold mb-1">
