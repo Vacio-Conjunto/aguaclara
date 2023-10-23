@@ -13,6 +13,8 @@ model reportes {
   diaDeCorte        String?   @db.VarChar(255)
   codigoPostal      Int?
   timestamp         DateTime? @default(now()) @db.Timestamp(0)
+  latitud Float
+  longitud Float
 }
 
 model mty_zip {

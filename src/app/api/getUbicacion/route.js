@@ -6,12 +6,14 @@ const prisma = new PrismaClient();
 export async function GET(request) {
   try {
     const url = new URL(request.url);
-    const postalCode = parseInt(url.searchParams.get('codigoPostal'),10);
+    const postalCode = parseInt(url.searchParams.get('codigoPostal'), 10);
     const postalCodeInfo = await prisma.mty_zip.findUnique({
       where: {
         codigoPostal: postalCode,
       },
     });
+
+    console.log("cp info", postalCodeInfo)
 
     if (postalCodeInfo) {
       const { codigoPostal, municipio, latitud, longitud } = postalCodeInfo;

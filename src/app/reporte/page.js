@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/app/components/Navbar";
 import FormularioReporte from "@/app/components/FormularioReporte";
 import "tailwindcss/tailwind.css";
@@ -9,32 +9,58 @@ import MapComponent from '../components/MapComponent';
 import 'leaflet/dist/leaflet.css';
 
 function Page() {
-    const [numeroDiasSinServicio, setNumeroDiasSinServicio] = useState(0);
+    const [numeroDiasSinServicio, setNumeroDiasSinServicio] = useState();
     const [diasDeCorte, setDiasDeCorte] = useState();
-    const [codigoPostal, setCodigoPostal] = useState(0);
+    const [codigoPostal, setCodigoPostal] = useState();
+    const [coordenadas, setCoordenadas] = useState();
+    const [isSubmit, setIsSubmit] = useState(true)
 
-    console.log("dias sin servicio => ", numeroDiasSinServicio)
-    console.log("dias de corte => ", diasDeCorte)
-    console.log("codigo postal => ", codigoPostal)
+    const serverDirectory = process.env.NEXT_PUBLIC_SERVER_DIRECTORY;
+
+    console.log("coordenadas =>", coordenadas)
+
+    useEffect(() => {
+        axios.get('http://' + serverDirectory + ':3000/api/getCoordenadas', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                setCoordenadas(response.data)
+            })
+    }, [isSubmit])
+
+    // const handleRefresh = () => {
+    //     axios.get('http://' + serverDirectory + ':3000/api/getCoordenadas', {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //         .then(response => {
+    //             setCoordenadas(response.data)
+    //         })
+    // };
 
     const handleSubmite = (e) => {
         //TODO: Agregar la dirección del servidor (localhost o IP) en el archivo .env
-        const serverDirectory = env("SERVER_DIRECTORY");
+        const serverDirectory = process.env.NEXT_PUBLIC_SERVER_DIRECTORY;
+        console.log(serverDirectory)
         e.preventDefault();
-        //var auxDiasDeCorte = diasDeCorte.map(item => item.name);
-        //console.log("aux dias de corte ", auxDiasDeCorte)
 
-        const endpointUrl = 'http://'+serverDirectory+':3000/api/getUbicacion?codigoPostal=' + codigoPostal;
+        const endpointUrl = 'http://' + serverDirectory + ':3000/api/getUbicacion?codigoPostal=' + codigoPostal;
 
         axios.get(endpointUrl)
             .then(response => {
+                console.log(response.data.latitud)
                 const data = {
                     numeroDiasSinServicio: parseInt(numeroDiasSinServicio, 10), // Convert to an integer
                     diasDeCorte: diasDeCorte,
-                    codigoPostal: parseInt(codigoPostal, 10) // Convert to an integer
+                    codigoPostal: parseInt(codigoPostal, 10), // Convert to an integer
+                    latitud: response.data.latitud,
+                    longitud: response.data.longitud
                 };
 
-                axios.post('http://'+serverDirectory+'3000/api/submitReporteAgua', data, {
+                axios.post('http://' + serverDirectory + ':3000/api/submitReporteAgua', data, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -46,6 +72,8 @@ function Page() {
                             showConfirmButton: false,
                             timer: 2000 // Cierra automáticamente después de 2 segundos
                         });
+                        setIsSubmit(!isSubmit)
+
                     })
                     .catch(error => {
                         Swal.fire({
@@ -81,15 +109,17 @@ function Page() {
                                 handleSubmite={handleSubmite}
                             />
                         </div>
-                        <div className="bg-gray-300 rounded-lg" style={{ minHeight: '600px', marginTop: '1rem', marginBottom: '2rem' }}>
+                        {coordenadas ? (< div className="bg-gray-300 rounded-lg" style={{ minHeight: '600px', marginTop: '1rem', marginBottom: '2rem', marginRight: '1rem' }}>
                             <div style={{ height: '100%', width: '100%' }}>
-                                <MapComponent key="mapita" />
+                                <MapComponent key="mapita"
+                                    coordenadas={coordenadas} />
                             </div>
-                        </div>
+                        </div>) : (<></>)}
+
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
